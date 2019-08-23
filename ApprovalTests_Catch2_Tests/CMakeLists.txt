@@ -39,6 +39,16 @@ if(CMAKE_CXX_COMPILER_ID MATCHES "GNU|Clang")
         -Wpedantic
         -Werror
         )
+
+    if (APPROVALS_SANITIZE_ADDRESS)
+        message("APPROVALS_SANITIZE_ADDRESS is enabled")
+        # https://stackoverflow.com/questions/44320465/whats-the-proper-way-to-enable-addresssanitizer-in-cmake-that-works-in-xcode
+        set (CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -fno-omit-frame-pointer -fsanitize=address")
+        set (CMAKE_LINKER_FLAGS_DEBUG "${CMAKE_LINKER_FLAGS_DEBUG} -fno-omit-frame-pointer -fsanitize=address")
+        message("${CMAKE_CXX_FLAGS_DEBUG} = " ${CMAKE_CXX_FLAGS_DEBUG})
+        message("${CMAKE_LINKER_FLAGS_DEBUG} = " ${CMAKE_LINKER_FLAGS_DEBUG})
+    endif ()
+
 elseif(CMAKE_CXX_COMPILER_ID STREQUAL "MSVC")
     target_compile_options(${PROJECT_NAME} PRIVATE
         /W4
