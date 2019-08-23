@@ -8,9 +8,9 @@ environment:
       APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2019
       GENERATOR: '"Visual Studio 16 2019"'
 
-#branches:
-#  except:
-#    - more_travis_builds
+branches:
+  except:
+    - setup_sanitizers
 
 before_build:
 - cmd: cmake -G %GENERATOR% .
