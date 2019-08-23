@@ -32,6 +32,7 @@ if (NOT_SUBPROJECT)
     option(APPROVALS_SANITIZE_ADDRESS "Enable address sanitizer in tests" OFF)
 
     if (APPROVALS_SANITIZE_ADDRESS)
+        # https://stackoverflow.com/questions/44320465/whats-the-proper-way-to-enable-addresssanitizer-in-cmake-that-works-in-xcode
         set (CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -fno-omit-frame-pointer -fsanitize=address")
         set (CMAKE_LINKER_FLAGS_DEBUG "${CMAKE_LINKER_FLAGS_DEBUG} -fno-omit-frame-pointer -fsanitize=address")
     endif ()
