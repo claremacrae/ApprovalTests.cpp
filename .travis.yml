@@ -142,6 +142,11 @@ matrix:
       dist: trusty
       addons: *clang8
 
+    - env: CLANG_VERSION=8 BUILD_TYPE=Debug ASAN=On
+      os: linux
+      dist: trusty
+      addons: *clang8
+
     # -------------------------------------------------------------------------
     # Mac clang
     # -------------------------------------------------------------------------
@@ -167,7 +172,7 @@ before_script:
 script:
   - mkdir .build
   - cd .build
-  - cmake ..
+  - cmake .. --warn-uninitialized -DAPPROVALS_SANITIZE_ADDRESS=$ASAN
   - cmake --build .
   - ctest --verbose
 

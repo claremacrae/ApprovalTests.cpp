@@ -27,7 +27,15 @@ if (NOT_SUBPROJECT)
     add_subdirectory("${CMAKE_BINARY_DIR}/googletest-src"
                      "${CMAKE_BINARY_DIR}/googletest-build")
     include_directories(lib) # for Catch
+    
+    # sanitizer options
+    option(APPROVALS_SANITIZE_ADDRESS "Enable address sanitizer in tests" OFF)
 
+    if (APPROVALS_SANITIZE_ADDRESS)
+        set (CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -fno-omit-frame-pointer -fsanitize=address")
+        set (CMAKE_LINKER_FLAGS_DEBUG "${CMAKE_LINKER_FLAGS_DEBUG} -fno-omit-frame-pointer -fsanitize=address")
+    endif ()
+    
     enable_testing()
     add_subdirectory(ApprovalTests_Catch1_Tests)
     add_subdirectory(ApprovalTests_Catch2_Tests)
