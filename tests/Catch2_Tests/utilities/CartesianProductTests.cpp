@@ -178,6 +178,9 @@ void cartesian_product(F&& f, const Ranges&... ranges) {
         // Hoverying over most words gives a blue "hyperlink" underline,
         // but not when hovering over either apply or transform
         //
+        // Renaming apply and transform to e.g. zzzz1 and zzzz2 doesn't fix the problem,
+        // suggesting that the cause is not the coincidence of the names with std::
+        // equivalents
         Detail::apply(std::forward<F>(f), Detail::transform<Detail::dereference_iterator>(its));
         // *********************************************************************************
     }
