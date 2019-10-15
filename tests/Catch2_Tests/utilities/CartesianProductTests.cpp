@@ -16,12 +16,12 @@ namespace ApprovalTests {
     namespace CartesianProduct {
         namespace Detail {
 
-// C++14 compatibility
-// See https://en.cppreference.com/w/cpp/types/enable_if
+            // C++14 compatibility
+            // See https://en.cppreference.com/w/cpp/types/enable_if
             template<bool B, class T=void>
             using enable_if_t = typename std::enable_if<B, T>::type;
 
-// See https://en.cppreference.com/w/cpp/utility/integer_sequence
+            // See https://en.cppreference.com/w/cpp/utility/integer_sequence
             template<std::size_t... Is>
             struct index_sequence {};
 
@@ -30,10 +30,10 @@ namespace ApprovalTests {
 
             template<std::size_t... Is>
             struct make_index_sequence<0, Is...> : index_sequence<Is...> {};
-// End of C++14 compatibility
+            // End of C++14 compatibility
 
-// Return the size of a tuple - constexpr for use as a template argument
-// See https://en.cppreference.com/w/cpp/utility/tuple/tuple_size
+            // Return the size of a tuple - constexpr for use as a template argument
+            // See https://en.cppreference.com/w/cpp/utility/tuple/tuple_size
             template<class Tuple>
             constexpr std::size_t tuple_size() {
                 return std::tuple_size<typename std::remove_reference<Tuple>::type>::value;
@@ -42,8 +42,8 @@ namespace ApprovalTests {
             template<class Tuple>
             using make_tuple_idxs = make_index_sequence<tuple_size<Tuple>()>;
 
-// C++17 compatibility
-// See https://en.cppreference.com/w/cpp/utility/apply
+            // C++17 compatibility
+            // See https://en.cppreference.com/w/cpp/utility/apply
             template <class F, class Tuple, std::size_t... I>
             constexpr auto apply_impl(F&& f, Tuple&& t, index_sequence<I...>)
             -> decltype(std::forward<F>(f)(std::get<I>(std::forward<Tuple>(t))...))
@@ -57,7 +57,7 @@ namespace ApprovalTests {
             {
                 apply_impl(std::forward<F>(f), std::forward<Tuple>(t), make_tuple_idxs<Tuple>{});
             }
-// End of C++17 compatibility
+            // End of C++17 compatibility
 
             template <class Tuple, class F, std::size_t... Is>
             void for_each_impl(Tuple&& t, F&& f, index_sequence<Is...>) {
@@ -126,7 +126,7 @@ namespace ApprovalTests {
                 }
             };
 
-// Transform an iterator into a value reference which will then be passed to the visitor function:
+            // Transform an iterator into a value reference which will then be passed to the visitor function:
             struct dereference_iterator {
                 template<class It>
                 auto operator()(It&& it) const -> decltype(*std::forward<It>(it)) {
@@ -134,14 +134,14 @@ namespace ApprovalTests {
                 }
             };
 
-// Increment outermost iterator. If it reaches its end, we're finished and do nothing.
+            // Increment outermost iterator. If it reaches its end, we're finished and do nothing.
             template<class Its, std::size_t I = tuple_size<Its>()-1>
             enable_if_t<I == 0>
             increment_iterator(Its& it, const Its&, const Its&) {
                 ++std::get<I>(it);
             }
 
-// Increment inner iterator. If it reaches its end, we reset it and increment the previous iterator.
+            // Increment inner iterator. If it reaches its end, we reset it and increment the previous iterator.
             template<class Its, std::size_t I = tuple_size<Its>()-1>
             enable_if_t<I != 0>
             increment_iterator(Its& its, const Its& begins, const Its& ends) {
@@ -152,10 +152,10 @@ namespace ApprovalTests {
             }
         } // namespace Detail
 
-// This is what actually loops over all the containers, one element at a time
-// It is called with a template type F that writes the inputs, and runs the converter, which writes the result(s)
-// all for one set of container values - when called by verifyAllCombinations()
-// More generally, F must have an operator() that acts on one set of input values.
+        // This is what actually loops over all the containers, one element at a time
+        // It is called with a template type F that writes the inputs, and runs the converter, which writes the result(s)
+        // all for one set of container values - when called by verifyAllCombinations()
+        // More generally, F must have an operator() that acts on one set of input values.
         template<class F, class... Ranges>
         void cartesian_product(F&& f, const Ranges&... ranges) {
             using std::begin;
@@ -167,12 +167,15 @@ namespace ApprovalTests {
             const auto begins = std::make_tuple(begin(ranges)...);
             const auto ends = std::make_tuple(end(ranges)...);
 
-            for (auto its = begins; std::get<0>(its) != std::get<0>(ends); Detail::increment_iterator(its, begins, ends)) {
+            for (auto its = begins; std::get<0>(its) != std::get<0>(ends); Detail::increment_iterator(its, begins, ends))
+            {
+                // *********************************************************************************
                 // Command-clicking on transform in CLion 2019.2.4 hangs with CLion with high CPU
                 // 'Use clang tidy' is turned off.
                 // Power-save turned on.
                 // Mac
                 Detail::apply(std::forward<F>(f), Detail::transform<Detail::dereference_iterator>(its));
+                // *********************************************************************************
             }
         }
     } // namespace CartesianProduct
