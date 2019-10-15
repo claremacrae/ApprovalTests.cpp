@@ -163,7 +163,7 @@ void cartesian_product(F&& f, const Ranges&... ranges) {
     const auto ends = std::make_tuple(end(ranges)...);
 
     for (auto its = begins; std::get<0>(its) != std::get<0>(ends); Detail::increment_iterator(its, begins, ends)) {
-        // Command-clicking on transform in CLion 2019.2.1 hangs with CLion with high CPU
+        // Command-clicking on transform in CLion 2019.2.4 hangs with CLion with high CPU
         // 'Use clang tidy' is turned off.
         // Power-save turned on.
         // Mac
