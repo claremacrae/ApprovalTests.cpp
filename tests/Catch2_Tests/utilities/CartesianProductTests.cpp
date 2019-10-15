@@ -1,4 +1,4 @@
-#include "Catch.hpp"
+#include "Catch.v2.7.1.hpp"
 #include "ApprovalTests/utilities/CartesianProduct.h"
 
 #include <string>
