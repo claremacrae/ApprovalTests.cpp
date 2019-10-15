@@ -212,7 +212,9 @@ int main()
     const std::vector<std::string> input1{"hello"};
     const std::vector<std::string> input2{"world"};
     AccumulateResults2StringsCommaSeparated results_store;
+
     cartesian_product(results_store, input1, input2);
+
     const Results expected{"hello,world"};
     assert(results_store.results == expected);
 }
