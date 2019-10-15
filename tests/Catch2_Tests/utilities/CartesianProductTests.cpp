@@ -164,10 +164,16 @@ namespace ApprovalTests {
             for (auto its = begins; std::get<0>(its) != std::get<0>(ends); Detail::increment_iterator(its, begins, ends))
             {
                 // *********************************************************************************
-                // Command-clicking on transform in CLion 2019.2.4 hangs with CLion with high CPU
-                // 'Preferences / Languages and Frameworks /  C/C++ / Clangd / Enable clangd server' is turned off.
-                // Power-save Mode turned on.
-                // Running on Mac
+                // Command-clicking on transform in CLion 2019.2.4 hangs with CLion with high CPU,
+                // popping up 'Resolving reference' and then being unrespoisnive,
+                // needing to be force-quit
+                //
+                // Settings:
+                // * 'Preferences / Languages and Frameworks /  C/C++ / Clangd / Enable clangd server' is turned off.
+                // * Power-save Mode turned on.
+                // * Running on Mac, XCode 10.3
+                //
+                // Note that it also hangs, without the 'Resolving reference' popup, if clangd server is on
                 Detail::apply(std::forward<F>(f), Detail::transform<Detail::dereference_iterator>(its));
                 // *********************************************************************************
             }
