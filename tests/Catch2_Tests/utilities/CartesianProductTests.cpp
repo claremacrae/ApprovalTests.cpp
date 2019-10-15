@@ -163,7 +163,7 @@ void cartesian_product(F&& f, const Ranges&... ranges) {
     {
         // *********************************************************************************
         // Command-clicking on transform in CLion 2019.2.4 hangs with CLion with high CPU,
-        // popping up 'Resolving reference' and then being unrespoisnive,
+        // popping up 'Resolving reference' and then being unresponsive,
         // needing to be force-quit
         //
         // Settings:
@@ -173,14 +173,17 @@ void cartesian_product(F&& f, const Ranges&... ranges) {
         //
         // Note that it also hangs, without the 'Resolving reference' popup, if clangd server is on
         //
-        // A possibly querker way to detect the issue is to hold down the Command key and hover
+        // A possibly quicker way to detect the issue is to hold down the Command key and hover
         // over the various words below.
-        // Hoverying over most words gives a blue "hyperlink" underline,
+        // Hovering over most words gives a blue "hyperlink" underline,
         // but not when hovering over either apply or transform
         //
         // Renaming apply and transform to e.g. zzzz1 and zzzz2 doesn't fix the problem,
         // suggesting that the cause is not the coincidence of the names with std::
         // equivalents
+        //
+        // Same problem in CLion 2019.3 EAP - Build #CL-193.4386.19 - built on October 10, 2019
+        // CLion 2019.1.4: Gives more errors, like std::get not recognised
         Detail::apply(std::forward<F>(f), Detail::transform<Detail::dereference_iterator>(its));
         // *********************************************************************************
     }
