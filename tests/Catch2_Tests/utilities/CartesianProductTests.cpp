@@ -165,9 +165,9 @@ namespace ApprovalTests {
             {
                 // *********************************************************************************
                 // Command-clicking on transform in CLion 2019.2.4 hangs with CLion with high CPU
-                // 'Use clang tidy' is turned off.
-                // Power-save turned on.
-                // Mac
+                // 'Preferences / Languages and Frameworks /  C/C++ / Clangd / Enable clangd server' is turned off.
+                // Power-save Mode turned on.
+                // Running on Mac
                 Detail::apply(std::forward<F>(f), Detail::transform<Detail::dereference_iterator>(its));
                 // *********************************************************************************
             }
