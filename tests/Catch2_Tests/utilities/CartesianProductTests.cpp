@@ -1,16 +1,10 @@
-#define CATCH_CONFIG_MAIN
-
-#include "Catch.v2.7.1.hpp"
-
 #include <string>
 #include <vector>
-#include <set>
 
 #include <functional>
 #include <tuple>
 #include <type_traits>
 #include <utility>
-#include <vector>
 
 namespace ApprovalTests {
     namespace CartesianProduct {
@@ -204,12 +198,13 @@ namespace
     };
 }
 
-TEST_CASE("Cartesian product with hard-coded-converter")
+int main()
 {
     const std::vector<std::string> input1{"hello"};
     const std::vector<std::string> input2{"world"};
     AccumulateResults2StringsCommaSeparated results_store;
     CartesianProduct::cartesian_product(results_store, input1, input2);
     const Results expected{"hello,world"};
-    REQUIRE(results_store.results == expected);
+    assert(results_store.results == expected);
 }
+
