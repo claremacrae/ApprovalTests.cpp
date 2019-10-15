@@ -172,6 +172,12 @@ void cartesian_product(F&& f, const Ranges&... ranges) {
         // * Running on Mac, XCode 10.3
         //
         // Note that it also hangs, without the 'Resolving reference' popup, if clangd server is on
+        //
+        // A possibly querker way to detect the issue is to hold down the Command key and hover
+        // over the various words below.
+        // Hoverying over most words gives a blue "hyperlink" underline,
+        // but not when hovering over either apply or transform
+        //
         Detail::apply(std::forward<F>(f), Detail::transform<Detail::dereference_iterator>(its));
         // *********************************************************************************
     }
