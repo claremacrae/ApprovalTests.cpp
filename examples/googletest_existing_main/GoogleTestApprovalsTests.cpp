@@ -24,3 +24,11 @@ TEST(GoogleTestApprovalsTests, SpecificReporter2)
                       Options().withReporter(Mac::AraxisMergeReporter()));
     // end-snippet
 }
+
+TEST(GoogleTestApprovalsTests, CLionDemo)
+{
+    // Trivial example code for https://youtrack.jetbrains.com/issue/CPP-1420
+    int x = 2;
+    int xsquared = x * x;
+    EXPECT_EQ(xsquared, 4);
+}
