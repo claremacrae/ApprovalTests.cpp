@@ -27,7 +27,7 @@ if (APPROVAL_TESTS_ENABLE_CODE_COVERAGE)
 endif ()
 
 if (NOT_SUBPROJECT)
-    add_subdirectory(CMake/cpputest)
+    # add_subdirectory(CMake/cpputest)
     add_subdirectory(CMake/googletest)
 endif ()
 
@@ -38,10 +38,13 @@ if (APPROVAL_TESTS_BUILD_TESTING OR APPROVAL_TESTS_BUILD_EXAMPLES)
     enable_testing()
 endif ()
 
-if (APPROVAL_TESTS_BUILD_TESTING)
-    add_subdirectory(CMake/fmt)
-    add_subdirectory(tests)
-endif ()
+# Tests disabled on branch, to remove boost dependency,
+# and avoid building code not relevant to
+# https://youtrack.jetbrains.com/issue/CPP-1420
+#if (APPROVAL_TESTS_BUILD_TESTING)
+#    add_subdirectory(CMake/fmt)
+#    add_subdirectory(tests)
+#endif ()
 
 if (APPROVAL_TESTS_BUILD_EXAMPLES)
     add_subdirectory(examples)
